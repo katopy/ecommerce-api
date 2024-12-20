@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +22,19 @@ public class Product {
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
-    public enum ProductStatus{
+
+    @OneToMany(mappedBy = "item")
+    Set<CartItem> itemRegistration;
+
+    @ManyToOne
+    private Category category;
+
+    private int stockNumber;
+
+    @ManyToMany(mappedBy = "likedProducts")
+    Set<Customer> likes;
+
+    public enum ProductStatus {
         ENABLED, DISABLED
     }
 
