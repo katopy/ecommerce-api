@@ -46,19 +46,30 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product disableOneById(Long productId){
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ObjectNotFoundException("Product not found: " + productId));
+                .orElseThrow(() -> new ObjectNotFoundException("Product not found with id: " + productId));
         product.setStatus(Product.ProductStatus.DISABLED);
 
         return productRepository.save(product);
 
     }
-
     @Override
     public Product createOneProduct(SaveProduct newProduct){
         Product product = new Product();
         product.setName(newProduct.getName());
         product.setPrice(newProduct.getPrice());
         product.setStatus(Product.ProductStatus.ENABLED);
+        Category category = new Category();
+        category.setCategoryId(newProduct.getCategoryId());
+        product.setCategory(category);
+
+        return productRepository.save(product);
+    }
+    @Override
+    public Product updateOneById(Long productId, SaveProduct newProduct){
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ObjectNotFoundException("Product not found with id: " + productId));
+        product.setName(newProduct.getName());
+        product.setPrice(newProduct.getPrice());
         Category category = new Category();
         category.setCategoryId(newProduct.getCategoryId());
         product.setCategory(category);

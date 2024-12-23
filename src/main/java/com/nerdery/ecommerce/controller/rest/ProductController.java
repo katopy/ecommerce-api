@@ -3,6 +3,7 @@ package com.nerdery.ecommerce.controller.rest;
 import com.nerdery.ecommerce.dto.SaveProduct;
 import com.nerdery.ecommerce.persistence.entity.Product;
 import com.nerdery.ecommerce.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,6 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@RequestBody SaveProduct newProduct){
         Product product = productService.createOneProduct(newProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
-
     }
 
     @GetMapping("/{productId}")
@@ -60,6 +60,12 @@ public class ProductController {
    @PutMapping("/{productId}/disabled")
     public ResponseEntity<Product> disableOneById(@PathVariable Long productId){
         Product product = productService.disableOneById(productId);
+        return ResponseEntity.ok(product);
+   }
+
+   @PutMapping("/{productId}")
+    public ResponseEntity<Product> updateOneById(@PathVariable Long productId, @RequestBody @Valid SaveProduct newProduct){
+        Product product = productService.updateOneById(productId, newProduct);
         return ResponseEntity.ok(product);
    }
 
