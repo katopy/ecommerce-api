@@ -1,5 +1,6 @@
 package com.nerdery.ecommerce.service.auth;
 
+import com.nerdery.ecommerce.persistence.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -21,17 +22,15 @@ public class JwtService {
     @Value("${security.jwt.secret-key}")
     private String SECRET_KEY;
 
-    public String generateToken(UserDetails user, Map<String, Object> extraClaims){
-
+    public String generateToken(User user, Map<String, Object> extraClaims){
         Date issuedAt = new Date(System.currentTimeMillis());
         Date expiration = new Date((EXPIRATION_IN_MINUTES * 60 * 1000) + issuedAt.getTime());
-
         return Jwts.builder()
                 .header()
                     .type("JWT")
                     .and()
                 .claims(extraClaims)
-                .subject(user.getUsername())
+                .subject(user.getEmail())
                 .issuedAt(issuedAt)
                 .expiration(expiration)
                 .signWith(generateKey(), Jwts.SIG.HS256)

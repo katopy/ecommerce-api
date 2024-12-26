@@ -26,17 +26,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createOneCustomer(SaveUser newUser) {
         validatePassword(newUser);
-
-        User user = new User();
-        user.setUsername(newUser.getUsername());
-        user.setPassword_hash(passwordEncoder.encode(newUser.getPassword()));
-        user.setRole(Role.ROLE_CUSTOMER);
+        var user = User.builder()
+                .username(newUser.getUsername())
+                .password_hash(passwordEncoder.encode(newUser.getPassword()))
+                .email(newUser.getEmail())
+                .role(Role.ROLE_CUSTOMER)
+                .build();
         return userRepository.save(user);
     }
 
     @Override
-    public Optional<User> findOneByUsername(String name) {
-        return Optional.empty();
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     public void validatePassword(SaveUser dto){

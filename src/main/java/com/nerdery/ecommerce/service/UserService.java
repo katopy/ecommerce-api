@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface UserService {
     User createOneCustomer(SaveUser newUser);
 
-    Optional<User> findOneByUsername(String name);
+    Optional<User> findByEmail(String email);
 }

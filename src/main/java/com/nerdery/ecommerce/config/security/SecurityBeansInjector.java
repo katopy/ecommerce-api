@@ -28,17 +28,14 @@ public class SecurityBeansInjector {
         DaoAuthenticationProvider authenticationStrategy = new DaoAuthenticationProvider();
         authenticationStrategy.setPasswordEncoder(passwordEncoder());
         authenticationStrategy.setUserDetailsService(userDetailsService());
-
         return authenticationStrategy;
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return (username) -> {
-            return userRepository.findByUsername(username).orElseThrow(() -> new ObjectNotFoundException("User not found with username" + username));
-        };
-    }
+        return (email) -> userRepository.findUserByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found with email" + email));
 
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
 }
