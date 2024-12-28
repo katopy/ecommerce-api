@@ -11,4 +11,6 @@ public interface UserService {
     User createOneCustomer(SaveUser newUser);
 
     Optional<User> findByEmail(String email);
+
+    Long getAuthenticatedUserId();
 }

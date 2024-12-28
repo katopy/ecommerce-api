@@ -17,6 +17,8 @@ public enum RolePermission {
     DISABLE_ONE_CATEGORY,
 
     READ_MY_PROFILE,
-    SHOW_MY_ORDERS;
+    SHOW_MY_ORDERS,
+
+    READ_ONE_ORDER;
 
 }
