@@ -38,11 +38,6 @@ public class SecurityConfig {
         authReqConfig.requestMatchers(HttpMethod.POST, "/customers").permitAll();
         authReqConfig.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
         authReqConfig.requestMatchers(HttpMethod.GET, "/auth/validate").permitAll();
-
-
-
         authReqConfig.anyRequest().authenticated();
     }
-
-
 }

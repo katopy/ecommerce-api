@@ -34,7 +34,6 @@ public class SecurityBeansInjector {
     @Bean
     public UserDetailsService userDetailsService() {
         return (email) -> userRepository.findUserByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found with email" + email));
-
     }
     @Bean
     public PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
