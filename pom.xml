@@ -125,6 +125,24 @@
 			<artifactId>s3</artifactId>
 			<version>2.29.43</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv -->
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>java-dotenv</artifactId>
+			<version>5.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot3</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+
+
 
 	</dependencies>
 	<build>

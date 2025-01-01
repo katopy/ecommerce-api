@@ -2,6 +2,8 @@ package com.nerdery.ecommerce.config.security;
 
 import com.nerdery.ecommerce.exception.ObjectNotFoundException;
 import com.nerdery.ecommerce.persistence.repository.UserRepository;
+import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,8 +35,13 @@ public class SecurityBeansInjector {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return (email) -> userRepository.findUserByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found with email" + email));
+        return (email) -> userRepository.findUserByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found with email: " + email));
     }
     @Bean
     public PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
+
+    @Bean
+    public RateLimiter rateLimiter(RateLimiterRegistry rateLimiterRegistry) {
+        return rateLimiterRegistry.rateLimiter("resetPasswordRequest");
+    }
 }
