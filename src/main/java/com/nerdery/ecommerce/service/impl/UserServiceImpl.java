@@ -1,9 +1,8 @@
 package com.nerdery.ecommerce.service.impl;
 
-import com.nerdery.ecommerce.config.security.IAuthenticationFacade;
+import com.nerdery.ecommerce.service.IAuthenticationFacade;
 import com.nerdery.ecommerce.dto.user.SaveUser;
 import com.nerdery.ecommerce.exception.InvalidPasswordException;
-import com.nerdery.ecommerce.exception.ObjectNotFoundException;
 import com.nerdery.ecommerce.persistence.entity.User;
 import com.nerdery.ecommerce.persistence.entity.enums.Role;
 import com.nerdery.ecommerce.persistence.repository.UserRepository;
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService {
         validatePassword(newUser);
         var user = User.builder()
                 .username(newUser.username())
-                .password_hash(passwordEncoder.encode(newUser.password()))
+                .passwordHash(passwordEncoder.encode(newUser.password()))
                 .email(newUser.email())
                 .role(Role.ROLE_CUSTOMER)
                 .build();
@@ -54,8 +53,5 @@ public class UserServiceImpl implements UserService {
         }
         throw new IllegalStateException("User is not authenticated");
     }
-    @Override
-    public User findUserById(Long userId){
-        return userRepository.findById(userId).orElseThrow(()-> new ObjectNotFoundException("User not found with ID: " + userId ));
-    }
+
 }

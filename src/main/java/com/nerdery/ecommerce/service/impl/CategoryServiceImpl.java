@@ -30,16 +30,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
 
     @Override
     public Category disableOneById(Long categoryId){
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ObjectNotFoundException("Product not found with id: " + categoryId));
+                .orElseThrow(() -> new ObjectNotFoundException("Category not found with id: " + categoryId));
         category.setStatus(Category.CategoryStatus.DISABLED);
-
         return categoryRepository.save(category);
 
     }

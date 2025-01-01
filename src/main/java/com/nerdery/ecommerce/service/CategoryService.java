@@ -10,8 +10,7 @@ public interface CategoryService {
     Page<Category> findAll(Pageable pageable);
 
     Optional<Category> findById(Long id);
-
-    void deleteProduct(Long id);
+    void deleteCategory(Long id);
 
     Category disableOneById(Long categoryId);
 

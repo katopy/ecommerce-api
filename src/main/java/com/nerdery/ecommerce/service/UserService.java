@@ -1,6 +1,6 @@
 package com.nerdery.ecommerce.service;
 
-import com.nerdery.ecommerce.dto.requests.SaveUser;
+import com.nerdery.ecommerce.dto.user.SaveUser;
 import com.nerdery.ecommerce.persistence.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +13,6 @@ public interface UserService {
     Optional<User> findByEmail(String email);
 
     Long getAuthenticatedUserId();
+
+
 }
