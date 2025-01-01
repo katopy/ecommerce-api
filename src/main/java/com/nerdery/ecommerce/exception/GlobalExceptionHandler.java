@@ -18,6 +18,7 @@ public class GlobalExceptionHandler {
         apiError.setUrl(req.getRequestURL().toString());
         apiError.setMethod(req.getMethod());
         apiError.setMessage("Error from the internal server.");
+        ex.printStackTrace();
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }

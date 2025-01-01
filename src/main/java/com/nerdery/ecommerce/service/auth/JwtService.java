@@ -1,20 +1,24 @@
 package com.nerdery.ecommerce.service.auth;
 
 import com.nerdery.ecommerce.persistence.entity.User;
+import com.nerdery.ecommerce.persistence.repository.JwtRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 public class JwtService {
+    private final Set<String> blacklist = new HashSet<>();
 
     @Value("${security.jwt.expiration-in-minutes}")
     private Long EXPIRATION_IN_MINUTES;
@@ -33,6 +37,8 @@ public class JwtService {
                 .subject(user.getEmail())
                 .issuedAt(issuedAt)
                 .expiration(expiration)
+                .id(UUID.randomUUID().toString())
+                .claim("jti", UUID.randomUUID().toString())
                 .signWith(generateKey(), Jwts.SIG.HS256)
                 .compact();
     }
@@ -47,11 +53,26 @@ public class JwtService {
 
     public Claims extractAllClaims(String jwt){
         return Jwts.parser()
-                .verifyWith(generateKey()).build()
+                .verifyWith(generateKey())
+                .build()
                 .parseSignedClaims(jwt)
                 .getPayload();
     }
 
-
+    public String extractJwtFromReq(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        String TOKEN_PREFIX = "Bearer ";
+        if (!StringUtils.hasText(authHeader) || !authHeader.startsWith(TOKEN_PREFIX)) {
+            return null;
+        }
+        return authHeader.split(" ")[1];
+    }
+//    public boolean manageBlacklist(String token, boolean addToBlacklist) {
+//        if (addToBlacklist) {
+//            blacklist.add(token);
+//            return true;
+//        }
+//        return blacklist.contains(token);
+//    }
 
 }
