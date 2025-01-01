@@ -1,6 +1,7 @@
 package com.nerdery.ecommerce.service;
 
-import com.nerdery.ecommerce.dto.SaveProduct;
+import com.nerdery.ecommerce.dto.products.ProductResponse;
+import com.nerdery.ecommerce.dto.products.SaveProduct;
 import com.nerdery.ecommerce.persistence.entity.Product;
 import org.springframework.data.domain.Page;
 
@@ -10,9 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    Page<Product> findAll(Pageable pageable);
+    Page<ProductResponse> findAll(Pageable pageable);
 
-    Optional<Product> findById(Long id);
+    Optional<ProductResponse> findById(Long id);
 
     List<Product> getByCategory(Integer id);
 
