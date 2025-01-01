@@ -19,6 +19,11 @@ public enum RolePermission {
     READ_MY_PROFILE,
     SHOW_MY_ORDERS,
 
+    ADD_ITEMS_CART,
+
+    CREATE_PAYMENT_INTENT,
+    ADD_PRODUCT_IMAGE,
+
     READ_ONE_ORDER;
 
 }

@@ -13,9 +13,11 @@ public enum Role {
             RolePermission.CREATE_ONE_PRODUCT,
             RolePermission.CREATE_ONE_CATEGORY,
             RolePermission.SHOW_MY_ORDERS,
+            RolePermission. ADD_PRODUCT_IMAGE,
             RolePermission.UPDATE_ONE_PRODUCT
             )),
-    ROLE_CUSTOMER(Collections.singletonList(RolePermission.READ_MY_PROFILE));
+    ROLE_CUSTOMER(Arrays.asList(RolePermission.READ_MY_PROFILE,  RolePermission.CREATE_PAYMENT_INTENT,
+            RolePermission.ADD_ITEMS_CART));
 
     private final List<RolePermission> permissionList;
 

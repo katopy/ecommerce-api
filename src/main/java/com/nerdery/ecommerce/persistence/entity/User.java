@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -30,7 +29,7 @@ public class User implements UserDetails {
     private Long userId;
     private String username;
     private String email;
-    private String password_hash;
+    private String passwordHash;
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -52,7 +51,7 @@ public class User implements UserDetails {
     public String getUsername(){return username;}
     @Override
     public String getPassword() {
-        return password_hash;
+        return passwordHash;
     }
 
     @Override
