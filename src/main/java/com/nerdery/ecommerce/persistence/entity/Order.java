@@ -1,18 +1,22 @@
 package com.nerdery.ecommerce.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "orders")
-public class Order {
+public class Order implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
@@ -21,8 +25,26 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    private enum OrderStatus{
-        COMPLETED, SHIPPED, IN_PROGRESS, RETURNED, FAILED
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToMany(mappedBy = "orderId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<ItemOrder> items;
+
+    public enum OrderStatus{
+        SUCCEEDED, IN_PROGRESS, FAILED
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", total=" + total +
+                ", status=" + status +
+                ", customerId=" + (customer != null ? customer.getCustomerId() : "null") +
+                ", itemsCount=" + (items != null ? items.size() : 0) +
+                '}';
     }
 
 }

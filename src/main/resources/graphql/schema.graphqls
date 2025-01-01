@@ -1,0 +1,76 @@
+scalar BigDecimal
+scalar DateTime
+
+type Query {
+    orders: [Order!]!
+    orderItems: [ItemOrder!]!
+    customerOrders(clientId: ID!, first: Int, last: String): OrderConnection
+    getMyOrders(first: Int, last: String): OrderConnection
+}
+
+type Mutation {
+    addItemsCart(items: [ItemInput]!): [CartItem]
+    buyProducts(items: [ItemInput]): Order
+}
+
+input ItemInput{
+    productId: Int
+    quantity: Int
+}
+
+type CartItem {
+    id: Int
+    cart: Cart
+    product: Product
+    addedAt: DateTime
+    quantity: Int
+}
+
+type Cart {
+    cartId: Int
+
+}
+type ItemOrder {
+    id: ID!
+    productId: Product
+    quantityProduct: Int!
+    totalProduct: BigDecimal!
+}
+
+type Product {
+    productId: ID
+    name: String!
+    price: BigDecimal!
+    details: String!
+}
+
+type OrderConnection {
+    edges: [OrderEdge]
+    items: [ItemOrder]
+    pageInfo: PageInfo!
+}
+type OrderEdge {
+    node: Order
+    cursor: String
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+type Order {
+    orderId: ID!
+    total: BigDecimal!
+    status: String!
+    items: [ItemOrder]
+    customer: Customer!
+}
+type Customer {
+    customerId: ID!
+    firstName: String
+    lastName: String!
+    phoneNumber: Int!
+}
+
